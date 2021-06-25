@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://transient91.github.io/images/csapp%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/%E6%98%A0%E5%B0%84%E7%A7%81%E6%9C%89%E5%8C%BA%E5%9F%9F.png">
 <meta property="og:image" content="https://transient91.github.io/images/csapp%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/%E8%BF%9B%E7%A8%8B%E7%BB%84.png">
 <meta property="article:published_time" content="2021-06-22T14:43:33.000Z">
-<meta property="article:modified_time" content="2021-06-25T14:10:37.948Z">
+<meta property="article:modified_time" content="2021-06-25T15:08:19.343Z">
 <meta property="article:author" content="transient91">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://transient91.github.io/images/csapp%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/%E6%8A%BD%E8%B1%A1.png">
@@ -330,12 +330,10 @@
 <p>&emsp;&emsp;例如，考虑大家熟悉的 hello 程序的下面这个版本，用系统级函数 write 来写，而不是用 printf:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    write(<span class="number">1</span>, <span class="string">&quot;hello, world\n&quot;</span>, <span class="number">13</span>);</span><br><span class="line">    _exit(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>&emsp;&emsp;write 函数的第一个参数将输出发送到 stdout。第二个参数是要写的字节序列，而第三个参数是要写的字节数。</p>
-<p>&emsp;&emsp;下面是 hello 程序的汇编语言版本，直接使用 syscall 指令来调用 write 和 exit 系统调用。第 9<del>13 行调用 write 函数。首先，第 9 行将系统调用 write 的编号存放在％rax 中，第 10</del>12 行设置参数列表。然后第 13 行使用 syscall 指令来调用系统调用。类似地，第 14~16 行调用 exit 系统调用。</p>
+<p>&emsp;&emsp;write 函数的第一个参数将输出发送到 stdout。第二个参数是要写的字节序列，而第三个参数是要写的字节数。<br>&emsp;&emsp;下面是 hello 程序的汇编语言版本，直接使用 syscall 指令来调用 write 和 exit 系统调用。第 9~13 行调用 write 函数。首先，第 9 行将系统调用 write 的编号存放在％rax 中，第 10~12 行设置参数列表。然后第 13 行使用 syscall 指令来调用系统调用。类似地，第 14~16 行调用 exit 系统调用。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">.section .data</span><br><span class="line">string:</span><br><span class="line">    .ascii &quot;hello, worldin&quot;</span><br><span class="line">string_end:</span><br><span class="line">    .equ len, string_end - string</span><br><span class="line">.section.text</span><br><span class="line">    .globl main</span><br><span class="line">main:</span><br><span class="line">    First, call write(1, &quot;hello, world\n&quot; ,13)</span><br><span class="line">    movq $1, %rax               write is system call 1</span><br><span class="line">    movq $1, %rdi               Arg1 : stdout has descriptor</span><br><span class="line">    movq $string, %rsi          Arg2 : hello world string</span><br><span class="line">    movq $len, %rdx             Arg3 : string length</span><br><span class="line">    syscall                     Make the system call</span><br><span class="line"></span><br><span class="line">    Next, call _exit(0)</span><br><span class="line">    movq $60,%rax               _exit is system call 6o</span><br><span class="line">    movq $0, %rdi               Arg1 : exit status is o</span><br><span class="line">    syscall                     Make the system call</span><br></pre></td></tr></table></figure>
 
-<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><h3 id="并发流"><a href="#并发流" class="headerlink" title="并发流"></a>并发流</h3><p>&emsp;&emsp;一个逻辑流的执行在时间上与另一个流重叠，称为<strong>并发流</strong>(concurrent flow)，这两个流被称为并发地运行。</p>
-<p>&emsp;&emsp;如果两个流并发地运行在不同的处理器核或者计算机上，那么我们称它们为<strong>并行流</strong>(parallel flow), 它们并行地运行(runningin parallel), 且并行地执行(parallel execution)。</p>
+<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><h3 id="并发流"><a href="#并发流" class="headerlink" title="并发流"></a>并发流</h3><p>&emsp;&emsp;一个逻辑流的执行在时间上与另一个流重叠，称为<strong>并发流</strong>(concurrent flow)，这两个流被称为并发地运行。<br>&emsp;&emsp;如果两个流并发地运行在不同的处理器核或者计算机上，那么我们称它们为<strong>并行流</strong>(parallel flow), 它们并行地运行(runningin parallel), 且并行地执行(parallel execution)。</p>
 <h3 id="时间片"><a href="#时间片" class="headerlink" title="时间片"></a>时间片</h3><p>&emsp;&emsp;一个进程和其他进程轮流运行的概念称为多任务(multitaskmg)。一个进程执行它的控制流的一部分的每一时间段叫做<strong>时间片</strong>(time slice)。因此，多任务也叫做时间分片(time slicing)。如图，进程 A 的流由两个时间片组成。<br><img src="https://transient91.github.io/images/csapp%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/%E6%97%B6%E9%97%B4%E7%89%87.png" alt="时间片.png"></p>
 <h3 id="上下文"><a href="#上下文" class="headerlink" title="上下文"></a>上下文</h3><p>&emsp;&emsp;上下文就是内核重新启动一个被抢占的进程所需的状态。它由一些对象的值组成，这些对象包括通用<strong>目的寄存器、浮点寄存器、程序计数器、用户桟、状态寄存器、内核栈和各种内核数据结构</strong>，比如描述地址空间的<strong>页表</strong>、包含有关当前进程信息的<strong>进程表</strong>，以及包含进程已打开文件的信息的<strong>文件表</strong>。</p>
 <h2 id="进程控制"><a href="#进程控制" class="headerlink" title="进程控制"></a>进程控制</h2><h3 id="获取进程-ID"><a href="#获取进程-ID" class="headerlink" title="获取进程 ID"></a>获取进程 ID</h3><p>&emsp;&emsp;每个进程都有一个唯一的正数(非零）进程 ID(PID)。getpid 函数返回调用进程的 PID。getppid 函数返回它的父进程的 PID(创建调用进程的进程)。</p>
@@ -364,22 +362,19 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">pid_t</span> <span class="title">waitpid</span><span class="params">(<span class="keyword">pid_t</span> pid, <span class="keyword">int</span>* statusp, <span class="keyword">int</span> options)</span></span>;</span><br></pre></td></tr></table></figure>
 
 <p>&emsp;&emsp;默认情况下(当 options=0 时），waitpid 挂起调用进程的执行，直到它的<strong>等待集合</strong>(wait set)中的一个子进程终止。如果等待集合中的一个进程在刚调用的时刻就已经终止了，那么 waitpid 就立即返回。在这两种情况中，waitpid 返回导致 waitpid 返回的已终止子进程的 PID。此时，已终止的子进程已经被回收，内核会从系统中删除掉它的所有痕迹。</p>
-<ol>
-<li><p>判定等待集合的成员<br>&emsp;&emsp;等待集合的成员是由参数 pid 来确定的：</p>
+<p>1 判定等待集合的成员<br>&emsp;&emsp;等待集合的成员是由参数 pid 来确定的：</p>
 <ul>
 <li>如果 pid&gt;0, 那么等待集合就是一个单独的子进程，它的进程 ID 等于 Pid。</li>
 <li>如果 Pid=-1，那么等待集合就是由父进程所有的子进程组成的。</li>
 </ul>
-</li>
-<li><p>修改默认行为<br>&emsp;&emsp;可以通过将 options 设置为常量 WNOHANG、WUNTRACED 和 WCONTINUED 的各种组合来修改默认行为：</p>
+<p>2 修改默认行为<br>&emsp;&emsp;可以通过将 options 设置为常量 WNOHANG、WUNTRACED 和 WCONTINUED 的各种组合来修改默认行为：</p>
 <ul>
 <li>WNOHANG： 如果等待集合中的任何子进程都还没有终止，那么就立即返回(返回值为 0)。区别在于默认的行为是挂起调用进程，直到有子进程终止。在等待子进程终止的同时，如果还想做些有用的工作，这个选项会有用。</li>
 <li>WUNTRACED：挂起调用进程的执行，直到等待集合中的一个进程变成已终止或者被停止。返回的 PID 为导致返回的已终止或被停止子进程的 PID。区别在于默认的行为是只返回已终止的子进程。当你想要检查已终止和被停止的子进程时，这个选项会有用。</li>
 <li>WCONTINUED：挂起调用进程的执行，直到等待集合中一个正在运行的进程终止或等待集合中一个被停止的进程收到 SIGCONT 信号重新开始执行。</li>
 <li>WNOHANG | WUNTRACED： 立即返回，如果等待集合中的子进程都没有被停止或终止，则返回值为 0; 如果有一个停止或终止，则返回值为该子进程的 PID。</li>
 </ul>
-</li>
-<li><p>检查已回收子进程的退出状态<br>&emsp;&emsp;如果 statusp 参数是非空的，那么 waitpid 就会在 status 中放上关于导致返回的子进程的状态信息，status 是 statusp 指向的值。wait.h 头文件定义了解释 status 参数的几个宏：</p>
+<p>3 检查已回收子进程的退出状态<br>&emsp;&emsp;如果 statusp 参数是非空的，那么 waitpid 就会在 status 中放上关于导致返回的子进程的状态信息，status 是 statusp 指向的值。wait.h 头文件定义了解释 status 参数的几个宏：</p>
 <ul>
 <li>WIFEXITED(status)：如果子进程通过调用 exit 或者一个返回（return)正常终止，就返回真。</li>
 <li>WEXITSTATUS(status)：返回一个正常终止的子进程的退出状态。只有在 WIFEXITEDO 返回为真时，才会定义这个状态。</li>
@@ -389,36 +384,22 @@
 <li>WSTOPSIG(status)：返回引起子进程停止的信号的编号。只有在 WIFSTOPPEDO 返回为真时，才定义这个状态。</li>
 <li>WIFCONTINUED(status)：如果子进程收到 SIGCONT 信号重新启动，则返回真。</li>
 </ul>
-</li>
-<li><p>错误条件<br>&emsp;&emsp;如果调用进程没有子进程，那么 waitpid 返回-1，并且设置 errno 为 ECHILD。如果 waitpid 函数被一个信号中断，那么它返回-1，并设置 errno 为 EINTR。</p>
-</li>
-<li><p>wait 函数<br>&emsp;&emsp;wait 函数是 waitpid 函数的简单版本：</p>
-</li>
-</ol>
+<p>4 错误条件<br>&emsp;&emsp;如果调用进程没有子进程，那么 waitpid 返回-1，并且设置 errno 为 ECHILD。如果 waitpid 函数被一个信号中断，那么它返回-1，并设置 errno 为 EINTR。<br>5 wait 函数<br>&emsp;&emsp;wait 函数是 waitpid 函数的简单版本：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">pid_t</span> <span class="title">wait</span><span class="params">(<span class="keyword">int</span>* statusp)</span></span>;</span><br></pre></td></tr></table></figure>
 
 <h3 id="让进程休眠"><a href="#让进程休眠" class="headerlink" title="让进程休眠"></a>让进程休眠</h3><p>&emsp;&emsp;sleep 函数将一个进程挂起一段指定的时间。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">sleep</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> secs)</span></span>;</span><br></pre></td></tr></table></figure>
 
-<p>&emsp;&emsp;如果请求的时间量已经到了，sleep 返回 0, 否则返回还剩下的要休眠的秒数。后一种情况是可能的，如果因为 sleep 函数被一个信号中断而过早地返回。</p>
-<p>&emsp;&emsp;pause 函数让调用函数休眠，直到该进程收到一个信号。</p>
+<p>&emsp;&emsp;如果请求的时间量已经到了，sleep 返回 0, 否则返回还剩下的要休眠的秒数。后一种情况是可能的，如果因为 sleep 函数被一个信号中断而过早地返回。<br>&emsp;&emsp;pause 函数让调用函数休眠，直到该进程收到一个信号。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pause</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br></pre></td></tr></table></figure>
 
 <h3 id="加载并运行程序"><a href="#加载并运行程序" class="headerlink" title="加载并运行程序"></a>加载并运行程序</h3><p>&emsp;&emsp;execve 函数在当前进程的上下文中加载并运行一个新程序。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">execve</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* filename, <span class="keyword">const</span> <span class="keyword">char</span>* argv[],</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">const</span> <span class="keyword">char</span>* envp[])</span></span>;</span><br></pre></td></tr></table></figure>
 
-<p>&emsp;&emsp;execve 函数加载并运行可执行目标文件 filename, 且带参数列表 argv 和环境变量列表 envp。只有当出现错误时，例如找不到 filename, execve 才会返回到调用程序。所以，与 fork 一次调用返回两次不同，execve 调用一次并从不返回。<br><img src="https://transient91.github.io/images/csapp%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/execve.png" alt="execve.png"></p>
-<p>&emsp;&emsp;假设运行在当前进程中的程序执行了如下的 execve 调用:<code>execve(&#39;a.out&quot;, NULL, NULL);</code><br>&emsp;&emsp;execve 函数在当前进程中加载并运行包含在可执行目标文件 a.out 中的程序，用 a.out 程序有效地替代了当前程序。加载并运行 a.out 需要以下几个步骤:</p>
-<ol>
-<li>删除已存在的用户区域。删除当前进程虚拟地址的用户部分中的已存在的区域结构。</li>
-<li>映射私有区域。为新程序的代码、数据、bss 和栈区域创建新的区域结构。所有这些新的区域都是私有的、写时复制的。代码和数据区域被映射为 a.out 文件中的.text 和.data 区。bss 区域是请求二进制零的，映射到匿名文件，其大小包含在 a.out 中。栈和堆区域也是请求二进制零的，初始长度为零。下图概括了私有区域的不同映射。</li>
-</ol>
+<p>&emsp;&emsp;execve 函数加载并运行可执行目标文件 filename, 且带参数列表 argv 和环境变量列表 envp。只有当出现错误时，例如找不到 filename, execve 才会返回到调用程序。所以，与 fork 一次调用返回两次不同，execve 调用一次并从不返回。<br><img src="https://transient91.github.io/images/csapp%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/execve.png" alt="execve.png"><br>&emsp;&emsp;假设运行在当前进程中的程序执行了如下的 execve 调用:<code>execve(&#39;a.out&quot;, NULL, NULL);</code><br>&emsp;&emsp;execve 函数在当前进程中加载并运行包含在可执行目标文件 a.out 中的程序，用 a.out 程序有效地替代了当前程序。加载并运行 a.out 需要以下几个步骤:</p>
+<p>1 删除已存在的用户区域。删除当前进程虚拟地址的用户部分中的已存在的区域结构。<br>2 映射私有区域。为新程序的代码、数据、bss 和栈区域创建新的区域结构。所有这些新的区域都是私有的、写时复制的。代码和数据区域被映射为 a.out 文件中的.text 和.data 区。bss 区域是请求二进制零的，映射到匿名文件，其大小包含在 a.out 中。栈和堆区域也是请求二进制零的，初始长度为零。下图概括了私有区域的不同映射。</p>
 <p><img src="https://transient91.github.io/images/csapp%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/%E6%98%A0%E5%B0%84%E7%A7%81%E6%9C%89%E5%8C%BA%E5%9F%9F.png" alt="映射私有区域.png"></p>
-<ol start="3">
-<li>映射共享区域。如果 a.out 程序与共享对象(或目标)链接，比如标准 C 库 libc.so, 那么这些对象都是动态链接到这个程序的，然后再映射到用户虚拟地址空间中的共享区域内。</li>
-<li>设置程序计数器(PC)。execve 做的最后一件事情就是设置当前进程上下文中的程序计数器，使之指向代码区域的入口点。 下一次调度这个进程时，它将从这个人口点开始执行。Linux 将根据需要换入代码和数据页面。</li>
-</ol>
-<p>&emsp;&emsp;Linux 提供了几个函数来操作环境数组：</p>
+<p>3 映射共享区域。如果 a.out 程序与共享对象(或目标)链接，比如标准 C 库 libc.so, 那么这些对象都是动态链接到这个程序的，然后再映射到用户虚拟地址空间中的共享区域内。<br>4 设置程序计数器(PC)。execve 做的最后一件事情就是设置当前进程上下文中的程序计数器，使之指向代码区域的入口点。 下一次调度这个进程时，它将从这个人口点开始执行。Linux 将根据需要换入代码和数据页面。<br>&emsp;&emsp;Linux 提供了几个函数来操作环境数组：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span>* <span class="title">getenv</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* name)</span></span>;</span><br></pre></td></tr></table></figure>
 
 <p>&emsp;&emsp;getenv 函数在环境数组中搜索字符串“name=value”。如果找到了，它就返回一个指向 value 的指针，否则它就返回 NULL。</p>
@@ -615,29 +596,18 @@
 <td align="center">电源故障</td>
 </tr>
 </tbody></table>
-<h3 id="发送信号"><a href="#发送信号" class="headerlink" title="发送信号"></a>发送信号</h3><p>&emsp;&emsp;内核通过更新目的进程上下文中的某个状态，发送（递送）一个信号给目的进程。发送信号可以有如下两种原因：1)内核检测到一个系统事件，比如除零错误或者子进程终止。2)一个进程调用了 kill 函数，显式地要求内核发送一个信号给目的进程。一个进程可以发送信号给它自己。<br>&emsp;&emsp;Unix 系统提供了大量向进程发送信号的机制。所有这些机制都是基于进程组(processgroup)这个概念的。</p>
+<h3 id="发送信号"><a href="#发送信号" class="headerlink" title="发送信号"></a>发送信号</h3><p>&emsp;&emsp;内核通过更新目的进程上下文中的某个状态，发送（递送）一个信号给目的进程。发送信号可以有如下两种原因：1)内核检测到一个系统事件，比如除零错误或者子进程终止。2)一个进程调用了 kill 函数，显式地要求内核发送一个信号给目的进程。一个进程可以发送信号给它自己。&emsp;&emsp;Unix 系统提供了大量向进程发送信号的机制。所有这些机制都是基于进程组(processgroup)这个概念的。</p>
 <h4 id="进程组"><a href="#进程组" class="headerlink" title="进程组"></a>进程组</h4><p>&emsp;&emsp;每个进程都只属于一个进程组，进程组是由一个正整数进程组 ID 来标识的。getpgrp 函数返回当前进程的进程组 ID:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">pid_t</span> <span class="title">getpgrp</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br></pre></td></tr></table></figure>
 
 <p>&emsp;&emsp;默认地，一个子进程和它的父进程同属于一个进程组。一个进程可以通过使用 setpgid 函数来改变自己或者其他进程的进程组：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">setpgid</span><span class="params">(<span class="keyword">pid_t</span> pid, <span class="keyword">pid_t</span> pgid)</span></span>;</span><br></pre></td></tr></table></figure>
 
-<p>&emsp;&emsp;setpgid 函数将进程 pid 的进程组改为 pgid。如果 pid 是 0 , 那么就使用当前进程的 PID。如果 pgid 是 0 , 那么就用 pid 指定的进程的 PID 作为进程组 ID。</p>
-<p>&emsp;&emsp;例如，如果进程 15213 是调用进程，那么<code>setpgid(0, 0);</code>会创建一个新的进程组，其进程组 ID 是 15213, 并且把进程 15213 加人到这个新的进程组中。</p>
-<ol>
-<li>用/bin/kill 程序发送信号</li>
-</ol>
-<p>&emsp;&emsp;/bin/kill 程序可以向另外的进程发送任意的信号。</p>
-<ol start="2">
-<li>从键盘发送信号</li>
-</ol>
-<p>&emsp;&emsp;Unix shell 使用<strong>作业</strong>(job)这个抽象概念来表示为对一条命令行求值而创建的进程。在任何时刻，至多只有一个前台作业和 0 个或多个后台作业。比如，键入<code>linux&gt; ls | sort</code>会创建一个由两个进程组成的前台作业，这两个进程是通过 Unix 管道连接起来的：一个进程运行 Is 程序，另一个运行 sort 程序。shell 为每个作业创建一个独立的进程组。进程组 ID 通常取自作业中父进程中的一个。比如，图 8-28 展示了有一个前台作业和两个后台作业的 shell。前台作业中的父进程 PID 为 20, 进程组 ID 也为 20。父进程创建两个子进程，每个也都是进程组 20 的成员。</p>
-<p><img src="https://transient91.github.io/images/csapp%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/%E8%BF%9B%E7%A8%8B%E7%BB%84.png" alt="进程组.png"></p>
-<p>&emsp;&emsp;在键盘上输人 Ctrl+C 会导致内核发送一个 SIGINT 信号到前台进程组中的每个进程。默认情况下，结果是终止前台作业。类似地，输人 Ctd+Z 会发送一个 SIGTSTP 信号到前台进程组中的每个进程。默认情况下，结果是停止（挂起)前台作业。</p>
-<ol start="3">
-<li>用 kill 函数发送信号</li>
-</ol>
-<p>&emsp;&emsp;进程通过调用 ki l l 函数发送信号给其他进程（包括它们自己）。</p>
+<p>&emsp;&emsp;setpgid 函数将进程 pid 的进程组改为 pgid。如果 pid 是 0 , 那么就使用当前进程的 PID。如果 pgid 是 0 , 那么就用 pid 指定的进程的 PID 作为进程组 ID。<br>&emsp;&emsp;例如，如果进程 15213 是调用进程，那么<code>setpgid(0, 0);</code>会创建一个新的进程组，其进程组 ID 是 15213, 并且把进程 15213 加人到这个新的进程组中。</p>
+<h4 id="1-用-bin-kill-程序发送信号"><a href="#1-用-bin-kill-程序发送信号" class="headerlink" title="1 用/bin/kill 程序发送信号"></a>1 用/bin/kill 程序发送信号</h4><p>&emsp;&emsp;/bin/kill 程序可以向另外的进程发送任意的信号。</p>
+<h4 id="2-从键盘发送信号"><a href="#2-从键盘发送信号" class="headerlink" title="2 从键盘发送信号"></a>2 从键盘发送信号</h4><p>&emsp;&emsp;Unix shell 使用<strong>作业</strong>(job)这个抽象概念来表示为对一条命令行求值而创建的进程。在任何时刻，至多只有一个前台作业和 0 个或多个后台作业。比如，键入<code>linux&gt; ls | sort</code>会创建一个由两个进程组成的前台作业，这两个进程是通过 Unix 管道连接起来的：一个进程运行 Is 程序，另一个运行 sort 程序。shell 为每个作业创建一个独立的进程组。进程组 ID 通常取自作业中父进程中的一个。比如，图 8-28 展示了有一个前台作业和两个后台作业的 shell。前台作业中的父进程 PID 为 20, 进程组 ID 也为 20。父进程创建两个子进程，每个也都是进程组 20 的成员。</p>
+<p><img src="https://transient91.github.io/images/csapp%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/%E8%BF%9B%E7%A8%8B%E7%BB%84.png" alt="进程组.png"><br>&emsp;&emsp;在键盘上输人 Ctrl+C 会导致内核发送一个 SIGINT 信号到前台进程组中的每个进程。默认情况下，结果是终止前台作业。类似地，输人 Ctd+Z 会发送一个 SIGTSTP 信号到前台进程组中的每个进程。默认情况下，结果是停止（挂起)前台作业。</p>
+<h4 id="3-用-kill-函数发送信号"><a href="#3-用-kill-函数发送信号" class="headerlink" title="3 用 kill 函数发送信号"></a>3 用 kill 函数发送信号</h4><p>&emsp;&emsp;进程通过调用 ki l l 函数发送信号给其他进程（包括它们自己）。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">kill</span><span class="params">(<span class="keyword">pid_t</span> pid, <span class="keyword">int</span> sig)</span></span>;</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -645,10 +615,7 @@
 <li>如果 pid=0，kill 发送信号 sig 给调用进程所在进程组中的每个进程，包括调用进程自己。</li>
 <li>如果 pid&lt;0，kill 发送信号 sig 给进程组|pid|(pid 的绝对值）中的每个进程。</li>
 </ul>
-<ol start="4">
-<li>用 alarm 函数发送信号</li>
-</ol>
-<p>&emsp;&emsp;进程可以通过调用 alarm 函数向它自己发送 SIGALRM 信号。</p>
+<p>4 用 alarm 函数发送信号<br>&emsp;&emsp;进程可以通过调用 alarm 函数向它自己发送 SIGALRM 信号。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">alarm</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> secs)</span></span>;</span><br></pre></td></tr></table></figure>
 
 <p>&emsp;&emsp;alarm 函数安排内核在 secs 秒后发送一个 SIGALRM 信号给调用进程。如果 secs 是零，那么不会调度安排新的闹钟(alarm)。<br>&emsp;&emsp;在任何情况下，对 alarm 的调用都将取消任何待处理的(pending)闹钟，并且返回任何待处理的闹钟在被发送前还剩下的秒数(如果这次对 alarm 的调用没有取消它的话）；如果没有任何待处理的闹钟，就返回零。</p>
@@ -675,14 +642,21 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sigprocmask</span><span class="params">(<span class="keyword">int</span> how, <span class="keyword">const</span> <span class="keyword">sigset_t</span>* <span class="built_in">set</span>, <span class="keyword">sigset_t</span>* oldset)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sigemptyset</span><span class="params">(<span class="keyword">sigset_t</span>* <span class="built_in">set</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sigfillset</span><span class="params">(<span class="keyword">sigset_t</span>* <span class="built_in">set</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sigaddset</span><span class="params">(<span class="keyword">sigset_t</span>* <span class="built_in">set</span>, <span class="keyword">int</span> signum)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sigdelset</span><span class="params">(<span class="keyword">sigset_t</span>* <span class="built_in">set</span>, <span class="keyword">int</span> signum)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sigisnember</span><span class="params">(<span class="keyword">const</span> <span class="keyword">sigset_t</span>* <span class="built_in">set</span>, <span class="keyword">int</span> signum)</span></span>;</span><br></pre></td></tr></table></figure>
 
 <p>&emsp;&emsp;sigprocmask 函数改变当前阻塞的信号集合。具体的行为依赖于 how 的值：</p>
-<pre><code>- SIG_BLOCK: 把 set 中的信号添加到 blocked 中（blocked=blocked | set)。
-- SIG_UNBLOCK: 从 blocked 中删除 set 中的信号（blocked=blocked &amp; ~set)。
-- SIG_SETMASK：block=set。
-</code></pre>
-<p>&emsp;&emsp;如果 oldset 非空，那么 blocked 位向量之前的值保存在 oldset 中。<br>&emsp;&emsp;使用下述函数对 set 信号集合进行操作：sigenptyset 初始化 set 为空集合。sigfillset 函数把每个信号都添加到 set 中。sigaddset 函数把 signum 添加到 set，sigdelset 从 set 中删除 signum，如果 signum 是 set 的成员，那么 sigismember 返回 1，否则返回 0。</p>
-<p>&emsp;&emsp;例如，用 sigprocmask 来临时阻塞接收 SIGINT 信号。</p>
+<ul>
+<li>SIG_BLOCK: 把 set 中的信号添加到 blocked 中（blocked=blocked | set)。</li>
+<li>SIG_UNBLOCK: 从 blocked 中删除 set 中的信号（blocked=blocked &amp; ~set)。</li>
+<li>SIG_SETMASK：block=set。</li>
+</ul>
+<p>&emsp;&emsp;如果 oldset 非空，那么 blocked 位向量之前的值保存在 oldset 中。<br>&emsp;&emsp;使用下述函数对 set 信号集合进行操作：sigenptyset 初始化 set 为空集合。sigfillset 函数把每个信号都添加到 set 中。sigaddset 函数把 signum 添加到 set，sigdelset 从 set 中删除 signum，如果 signum 是 set 的成员，那么 sigismember 返回 1，否则返回 0。<br>&emsp;&emsp;例如，用 sigprocmask 来临时阻塞接收 SIGINT 信号。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sigset_t</span> mask, prev_mask;</span><br><span class="line"></span><br><span class="line">sigemptyset(&amp;mask);</span><br><span class="line">sigaddset(&amp;mask, SIGINT);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Block SIGINT and save previous blocked set */</span></span><br><span class="line">Sigprocmask(SIG_BLOCK, &amp;mask, &amp;prev_mask);</span><br><span class="line">.</span><br><span class="line">.   <span class="comment">//Code region that will not be interrupted by SIGINT</span></span><br><span class="line">.</span><br><span class="line"><span class="comment">/* Restore previous blocked set,unblocking SIGINT */</span></span><br><span class="line">sigprocmask(SIG_SETMASK, &amp;prev_mask, <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure>
 
+<h2 id="非本地跳转"><a href="#非本地跳转" class="headerlink" title="非本地跳转"></a>非本地跳转</h2><p>&emsp;&emsp;C 语言提供了一种用户级异常控制流形式，称为非本地跳转(nonlocal jump)，它将控制直接从一个函数转移到另一个当前正在执行的函数，而不需要经过正常的调用-返回序列。非本地跳转是通过 setjmp 和 longjmp 函数来提供的。sigsetjmp 和 siglongjmp 函数是 setjmp 和 longjmp 的可以被信号处理程序使用的版本。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;setjmp.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">setjmp</span><span class="params">(jmp_buf env)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sigsetjmp</span><span class="params">(sigjmp_buf env, <span class="keyword">int</span> savesigs)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;setjmp 函数在 env 缓冲区中保存当前<strong>调用环境</strong>，以供后面的 longjmp 使用，并返回 0。调用环境包括<strong>程序计数器、栈指针和通用目的寄存器</strong>。setjmp 返回的值不能被赋值给变量：<code>rc = setjmp(env); /* Wrong! */</code>。不过它可以安全地用在 switch 或条件语句的测试中。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;setjmp.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">longjmp</span><span class="params">(jmp_buf env, <span class="keyword">int</span> retval)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">siglongjmp</span><span class="params">(sigjmp_buf env, <span class="keyword">int</span> retval)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;longjmp 函数从 env 缓冲区中恢复调用环境，然后触发一个从最近一次初始化 env 的 setjmp 调用的返回。然后 setjmp 返回，并带有非零的返回值 retval。<br>&emsp;&emsp;setjmp 函数只被调用一次，但返回多次：一次是当第一次调用 setjmp，而调用环境保存在缓冲区 env 中时，一次是为每个相应的 longjmp 调用。另一方面，longjmp 函数被调用一次，但从不返回。</p>
 <h1 id="处理器体系结构"><a href="#处理器体系结构" class="headerlink" title="处理器体系结构"></a>处理器体系结构</h1><ul>
 <li>在 Y86-64 的顺序结构实现中，寄存器文件写时是作为时序逻辑器件看待。</li>
 <li>Y86-64 的 CPIU 顺序结构设计与实现中，分成取值、译码、执行、访存、写回、更新 PC 6 个阶段。</li>
