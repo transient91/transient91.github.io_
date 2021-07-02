@@ -15,10 +15,18 @@
 <meta property="og:site_name" content="transient91&#39;s blog">
 <meta property="og:description" content="信息安全期末复习">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://transient91.github.io/images/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/PKI%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://transient91.github.io/images/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/X.509%E7%9A%84CA%E7%9B%AE%E5%BD%95%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://transient91.github.io/images/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/%E4%B8%80%E4%B8%AA%E5%85%B8%E5%9E%8B%E7%9A%84PKI%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="https://transient91.github.io/images/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/DAC.png">
+<meta property="og:image" content="https://transient91.github.io/images/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/MAC.png">
+<meta property="og:image" content="https://transient91.github.io/images/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/RBAC.png">
 <meta property="article:published_time" content="2021-07-01T15:20:00.000Z">
-<meta property="article:modified_time" content="2021-07-01T16:53:04.235Z">
+<meta property="article:modified_time" content="2021-07-02T06:00:18.187Z">
 <meta property="article:author" content="transient91">
+<meta property="article:tag" content="信息安全">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://transient91.github.io/images/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/PKI%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png">
   
     <link rel="alternative" href="/atom.xml" title="transient91&#39;s blog" type="application/atom+xml">
   
@@ -158,137 +166,127 @@
       
         <p>信息安全期末复习</p>
 <span id="more"></span>
-
-<h1 id="信息安全体系架构"><a href="#信息安全体系架构" class="headerlink" title="信息安全体系架构"></a>信息安全体系架构</h1><p>CIA 三元组是信息安全的三个最基本的目标</p>
+<h1>信息安全体系架构</h1>
+<p>  CIA 三元组是信息安全的三个最基本的目标：</p>
 <ul>
 <li>机密性(Confidentiality)：指信息在存储、传输、使用过程中，不会泄漏给非授权用户或实体；</li>
 <li>完整性(Integrity)：指信息在存储、使用、传输过程中，不会被非授权用户篡改或防止授权用户对信息进行不恰当的篡改；</li>
 <li>可用性(Availability)：指确保授权用户或实体对信息资源的正常使用不会被异常拒绝，允许其可靠而及时地访问信息资源。</li>
 </ul>
-<h1 id="密码体制的五要素"><a href="#密码体制的五要素" class="headerlink" title="密码体制的五要素"></a>密码体制的五要素</h1><ul>
-<li>完整密码体制要包括如下五个要素<ul>
+<h1>密码体制的五要素</h1>
+<p>  完整密码体制要包括如下五个要素：</p>
+<ul>
 <li>M 是可能明文的有限集称为明文空间；</li>
 <li>C 是可能密文的有限集称为密文空间；</li>
 <li>K 是一切可能密钥构成的有限集称为密钥空间；</li>
 <li>E 为加密算法，对于任一密钥， 都能够有效地计算；</li>
 <li>D 为解密算法，对于任一密钥，都能够有效地计算。</li>
 </ul>
-</li>
-</ul>
-<h1 id="仿射密码"><a href="#仿射密码" class="headerlink" title="仿射密码"></a>仿射密码</h1><ul>
-<li>仿射变换：线性变换 + 平移</li>
-<li>仿射密码<ul>
-<li>可以看作是移位密码和乘数密码的结合。</li>
-</ul>
-</li>
-<li>密码体制描述如下：<ul>
-<li>$M = C = Z/q,;q = 26$</li>
-<li>$K={k_1,k_2\in Z\vert0&lt;k_1,k_2&lt;26，gcd(k_1,26)=1}$</li>
+<h1>仿射密码</h1>
+<p>仿射变换：线性变换 + 平移<br>
+仿射密码：可以看作是移位密码和乘数密码的结合。</p>
+<p>密码体制描述如下：</p>
+<ul>
+<li>$M = C = Z/q$,$;q = 26$</li>
+<li>$K={k_1,k_2\in Z\vert0 &lt; k_1,k_2 &lt; 26,gcd(k_1,26) = 1}$</li>
 <li>$E_k(m) = (k_1m+k_2);mod;q$</li>
-<li>$D_k(c) = k_1^{-1}(c - k_2);mod;q$，其中 $k_1^{-1}$为 $k_1$ 在模 q 下的乘法逆元</li>
+<li>$D_k© = k_1^{-1}(c - k_2);mod;q$，其中 $k_1^{-1}$为 $k_1$ 在模 q 下的乘法逆元</li>
 </ul>
-</li>
-</ul>
-<p>例题：<br>设 $k =(5,3)$，注意到 $5^{-1};mod;26 = 21$，<br>加密函数：$E_k(x) = 5x + 3 (mod;26)$，<br>解密函数：$D_k(y)=21(y -3);mod;26 = 21y - 11 (mod;26)$，<br>加密明文“yes”的加密与解密过程如下：</p>
+<h6 id="例：">例：</h6>
+<p>设 $k =(5,3)$，注意到 $5^{-1};mod;26 = 21$，<br>
+加密函数：$E_k(x) = 5x + 3 (mod;26)$，<br>
+解密函数：$D_k(y)=21(y -3);mod;26 = 21y - 11 (mod;26)$，<br>
+加密明文“yes”的加密与解密过程如下：</p>
 <p>$E_k\left{\begin{array}{l}y\e\s\end{array}\right}=5\times\left{\begin{array}{l}24\4\18\end{array}\right}+\left{\begin{array}{l}3\3\3\end{array}\right}=\left{\begin{array}{l}19\23\15\end{array}\right}=\left{\begin{array}{l}t\x\p\end{array}\right}$</p>
 <p>$21\times\left{\begin{array}{l}19\23\15\end{array}\right}-\left{\begin{array}{l}11\11\11\end{array}\right}=\left{\begin{array}{l}24\4\18\end{array}\right}=\left{\begin{array}{l}y\e\s\end{array}\right}$</p>
-<ul>
-<li>乘法逆元算法<br>即 $x=y’$ 且 $y=x’-\lfloor\frac ab\rfloor y’$</li>
-</ul>
+<h6 id="乘法逆元算法">乘法逆元算法</h6>
+<p>即 $x=y’$ 且 $y=x’-\lfloor\frac ab\rfloor y’$</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">exgcd</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span>&amp; x, <span class="keyword">int</span>&amp; y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (a &lt; b) <span class="keyword">return</span> exgcd(b, a, y, x);</span><br><span class="line">    <span class="keyword">if</span> (b == <span class="number">0</span>) &#123;</span><br><span class="line">        x = <span class="number">1</span>; y = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> x1;</span><br><span class="line">        <span class="keyword">int</span> d = exgcd(b, a % b, x1, x);</span><br><span class="line">        y = x1 - a / b * x;</span><br><span class="line">        <span class="keyword">return</span> d;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">inv</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x, y;</span><br><span class="line">    <span class="keyword">if</span> (exgcd(n, p, x, y) == <span class="number">1</span>) &#123;</span><br><span class="line">        x = x % p;</span><br><span class="line">        <span class="keyword">return</span> x &gt;= <span class="number">0</span> ? x : p + x;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="数据加密标准-DES-的算法结构和特点"><a href="#数据加密标准-DES-的算法结构和特点" class="headerlink" title="数据加密标准 DES 的算法结构和特点"></a>数据加密标准 DES 的算法结构和特点</h1><h1 id="公钥密码的思想（数学描述）"><a href="#公钥密码的思想（数学描述）" class="headerlink" title="公钥密码的思想（数学描述）"></a>公钥密码的思想（数学描述）</h1><ul>
-<li>公开密钥密码又称非对称密钥密码或双密钥密码<ul>
+<h1>数据加密标准 DES 的算法结构和特点</h1>
+<h1>公钥密码的思想（数学描述）</h1>
+<p>公开密钥密码又称非对称密钥密码或双密钥密码，</p>
+<ul>
 <li>加密密钥和解密密钥为<strong>两个独立密钥</strong>。</li>
 <li>公开密钥密码的<strong>通信安全性取决于私钥的保密性</strong>。</li>
 </ul>
-</li>
-<li>单向陷门函数 f(x)，必须满足以下三个条件。<ol>
+<p>单向陷门函数 f(x)，必须满足以下三个条件：</p>
+<ol>
 <li>给定 x，计算 y=f(x)是容易的；</li>
 <li>给定 y, 计算 x 使 y=f(x)是困难的（所谓计算 x=f-1(y)困难是指计算上相当复杂已无实际意义）；</li>
 <li>存在 δ，已知 δ 时对给定的任何 y，若相应的 x 存在，则计算 x 使 y=f(x)是容易的。</li>
 </ol>
-</li>
-</ul>
-<h1 id="离散对数问题"><a href="#离散对数问题" class="headerlink" title="离散对数问题"></a>离散对数问题</h1><ul>
-<li>原根<ul>
+<h1>离散对数问题</h1>
+<h6 id="原根">原根</h6>
+<ul>
 <li>素数 p 的原根（primitive root）的定义：如果 a 是素数 p 的原根，则数 <strong>$a;mod;p, a^2;mod;p,\dots, a^{p-1};mod;p$</strong> 是不同的并且包含从 1 到 p-1 之间的所有整数的某种排列。对任意的整数 b，可以找到唯一的幂 i，满足 $b \equiv a^i;mod;p$，且 1 ≤ i ≤ p-1。</li>
 <li>注：“b ≡ a mod p”等价于“b mod p = a mod p”，称为“b 与 a 模 p 同余”。</li>
 </ul>
-</li>
-<li>离散对数<ul>
+<h6 id="离散对数">离散对数</h6>
+<ul>
 <li>若 a 是素数 p 的一个原根，</li>
 <li>则相对于任意整数 b（b mod p ≠ 0），</li>
 <li>必然存在唯一的整数 i（1 ≤ i ≤ p-1），</li>
 <li>使得 $b \equiv a^i;mod;p$，i 称为 b 的以 a 为基数且模 p 的幂指数，即离散对数。</li>
 </ul>
-</li>
-<li>求解离散对数<ul>
+<h6 id="求解离散对数">求解离散对数</h6>
+<ul>
 <li>对于函数 $y \equiv g^x;mod;p$，其中，g 为素数 p 的原根，y 与 x 均为正整数，已知 g、x、p，计算 y 是容易的；而已知 y、g、p，计算 x 是困难的，即求解 y 的离散对数 x。</li>
 <li>注：离散对数的求解为数学界公认的困难问题。</li>
 </ul>
-</li>
-</ul>
-<h1 id="Diffie-Hellman-密钥交换协议"><a href="#Diffie-Hellman-密钥交换协议" class="headerlink" title="Diffie-Hellman 密钥交换协议"></a>Diffie-Hellman 密钥交换协议</h1><ul>
-<li>Alice 和 Bob 协商好一个大素数 p，和大的整数 g，1 &lt; g &lt; p，g 是 p 的原根。p 和 g 无须保密，为网络上的所有用户共享。</li>
-<li>当 Alice 和 Bob 要进行保密通信时，他们可以按如下步骤来做：<ol>
-<li>Alice 选取大的随机数 x&lt;p，并计算 Y=gx(mod P)；</li>
-<li>Bob 选取大的随机数 x&lt;p，并计算 Y=gx (mod P)；</li>
-<li>Alice 将 Y 传送给 Bob，Bob 将 Y 传送给 Alice；</li>
-<li>Alice 计算 K=(Y)X(mod P)，Bob 计算 K ＝(Y) X (mod P)</li>
+<h1>Diffie-Hellman 密钥交换协议</h1>
+<p>  Alice 和 Bob 协商好一个大素数 p，和大的整数 g，1 &lt; g &lt; p，g 是 p 的原根。p 和 g 无须保密，为网络上的所有用户共享。<br>
+当 Alice 和 Bob 要进行保密通信时，他们可以按如下步骤来做：</p>
+<ol>
+<li>Alice 选取大的随机数 x &lt; p，并计算 $Y = g^x(mod;P)$；</li>
+<li>Bob 选取大的随机数 x’ &lt; p，并计算 $Y’ = g^{x’}(mod;P)$；</li>
+<li>Alice 将 Y 传送给 Bob，Bob 将 Y’ 传送给 Alice；</li>
+<li>Alice 计算 $K = (Y’)^X(mod;P)$，Bob 计算 $K’ = (Y)^{X’}(mod;P)$</li>
 </ol>
-</li>
-<li>显而易见 $K=K’=g^{xx’}(mod;P)$，即 Alice 和 Bob 已获得了相同的秘密值 K。</li>
-</ul>
-<h1 id="RSA-公钥算法"><a href="#RSA-公钥算法" class="headerlink" title="RSA 公钥算法"></a>RSA 公钥算法</h1><ul>
-<li><p>欧拉定理</p>
+<p>  显而易见 $K=K’=g^{xx’}(mod;P)$，即 Alice 和 Bob 已获得了相同的秘密值 K。</p>
+<h1>RSA 公钥算法</h1>
+<h6 id="欧拉定理">欧拉定理</h6>
+<p>  欧拉函数是欧拉定理的核心概念，其表述：对于一个正整数 n，由小于 n 且和 n 互素的正整数构成的集合为 Zn，这个集合被称为 n 的完全余数集合。Zn 包含的元素个数记做 φ(n)，称为欧拉函数，其中 φ(1)被定义为 1，但是并没有任何实质的意义。</p>
 <ul>
-<li>欧拉函数是欧拉定理的核心概念，其表述：对于一个正整数 n，由小于 n 且和 n 互素的正整数构成的集合为 Zn，这个集合被称为 n 的完全余数集合。Zn 包含的元素个数记做 φ(n)，称为欧拉函数，其中 φ(1)被定义为 1，但是并没有任何实质的意义。</li>
 <li>如果两个素数 p 和 q，且 n = p × q ，则 φ(n) = (p-1)(q-1)；</li>
 <li>欧拉定理的具体表述：正整数 a 与 n 互素，则 a φ(n) ≡ 1 mod n。</li>
+<li>推论：给定两个素数 p 和 q，以及两个整数 m、n，使得 n = p × q，且 0 &lt; m &lt; n，对于任意整数 k 下列关系成立 $m^{kφ(n)+1} = m^{k(p-1)(q-1)+1} ≡ m;mod;n$。</li>
 </ul>
-</li>
-<li><p>推论：</p>
+<h6 id="大整数因子分解问题：">大整数因子分解问题：</h6>
+<p>  已知 p、q 为两个大素数，则求 N=p×q 是容易的，只需要一次乘法运算；但已知 N 是两个大素数的乘积，要求将 N 分解，则在计算上是困难的，其<strong>运行时间复杂程度接近于不可行</strong>。</p>
+<h6 id="算法时间复杂性：">算法时间复杂性：</h6>
 <ul>
-<li>给定两个素数 p 和 q，以及两个整数 m、n，使得 n = p × q，且 0 &lt; m &lt; n，对于任意整数 k 下列关系成立 $m^{kφ(n)+1} = m^{k(p-1)(q-1)+1} ≡ m;mod;n$。</li>
-</ul>
+<li>
+<p>如果输入规模为 n 时，一个算法的运行时间复杂度为 O(n)，称此算法为<strong>线性的</strong>；</p>
 </li>
-<li><p>大整数因子分解问题：</p>
-<ul>
-<li>已知 p、q 为两个大素数，则求 N=p×q 是容易的，只需要一次乘法运算；但已知 N 是两个大素数的乘积，要求将 N 分解，则在计算上是困难的，其<strong>运行时间复杂程度接近于不可行</strong>。</li>
-</ul>
+<li>
+<p>运行时间复杂度为 O(n<sup>k</sup>)，其中 k 为常量，称此算法为<strong>多项式的</strong>；</p>
 </li>
-<li><p>算法时间复杂性：</p>
-<ul>
-<li>如果输入规模为 n 时，一个算法的运行时间复杂度为 O(n)，称此算法为<strong>线性的</strong>；</li>
-<li>运行时间复杂度为 O(n<sup>k</sup>)，其中 k 为常量，称此算法为<strong>多项式的</strong>；</li>
-<li>若有某常量 t 和多项式 h(n)，使算法的运行时间复杂度为 O(t<sup>h(n)</sup>)，则称此算法为<strong>指数的</strong>。</li>
-</ul>
+<li>
+<p>若有某常量 t 和多项式 h(n)，使算法的运行时间复杂度为 O(t<sup>h(n)</sup>)，则称此算法为<strong>指数的</strong>。</p>
 </li>
-<li><p>一般说来，</p>
-<ul>
-<li>在线性时间和多项式时间内被认为是可解决的，比多项式时间更坏的，尤其是<strong>指数时间被认为是不可解决的</strong>。</li>
-<li>注：如果输入规模太小，即使很复杂的算法也会变得可行的。</li>
-</ul>
+<li>
+<p>一般说来，在线性时间和多项式时间内被认为是可解决的，比多项式时间更坏的，尤其是<strong>指数时间被认为是不可解决的</strong>。</p>
 </li>
-<li><p>RSA 密码体制：</p>
+<li>
+<p>注：如果输入规模太小，即使很复杂的算法也会变得可行的。</p>
+</li>
+</ul>
+<h6 id="RSA-密码体制：">RSA 密码体制：</h6>
 <ul>
 <li>明文和密文均是 0 到 n 之间的整数，n 通常为 1024 位二进制数或 309 位十进制数，</li>
 <li>明文空间 P = 密文空间 C = {x∈Z|0&lt; x &lt; n,Z 为整数集合}。</li>
 </ul>
-</li>
-<li><p>RSA 密码的密钥生成具体步骤如下：</p>
+<p>RSA 密码的密钥生成具体步骤如下：</p>
 <ol>
-<li>选择<strong>互异的素数 p 和 q</strong>，计算 n=pq，**φ(n) = (p - 1)(q - 1)**；</li>
+<li>选择<strong>互异的素数 p 和 q</strong>，计算 n=pq，<strong>φ(n) = (p - 1)(q - 1)</strong>；</li>
 <li>选择<strong>整数 e</strong>，使 gcd(φ(n),e) = 1，且 1 &lt; e &lt; φ(n)；</li>
-<li>计算 d，**$d ≡ e{-1};mod;φ(n)$**，即 d 为模 φ(n)下 e 的乘法逆元；</li>
+<li>计算 d，<strong>$d ≡ e{-1};mod;φ(n)$</strong>，即 d 为模 φ(n)下 e 的乘法逆元；</li>
 </ol>
-</li>
-<li><p>公钥 P<sub>k</sub> = { e, n }，私钥 S<sub>k</sub> = { d, n, p, q }</p>
-</li>
-<li><p>加密：c = m<sup>e</sup> mod n，解密：m = c<sup>d</sup> mod n。</p>
-</li>
-<li><p>RSA 例</p>
+<ul>
+<li>公钥 P<sub>k</sub> = { e, n }，私钥 S<sub>k</sub> = { d, n, p, q }</li>
+<li>加密：c = m<sup>e</sup> mod n，解密：m = c<sup>d</sup> mod n。</li>
+</ul>
+<h6 id="例：-2">例：</h6>
 <ol>
 <li>p = 101，q = 113，n = 11413，φ(n)=100 × 112 = 11200。</li>
 <li>e = 3533，求得 d ≡ e - 1 mod 11200 ≡ 6597 mod 11200，d = 6597。</li>
@@ -296,23 +294,387 @@
 <li>明文 9726，计算 97263533 mod 11413 = 5761，发送密文 5761。</li>
 <li>密文 5761 时，用 d = 6597 进行解密，计算 57616597(mod 11413) = 9726。</li>
 </ol>
-</li>
-<li><p>RSA 的安全性</p>
+<h6 id="RSA-的安全性">RSA 的安全性</h6>
 <ul>
 <li>RSA 是基于<strong>单向函数 $e_k(x)=x^e(mod;n)$</strong> ，求逆计算不可行。</li>
 <li>解密的关键是了解陷门信息，即能够分解 n=pq，知道 φ(n)=(p-1)(q-1)，从而解出解密私钥 d。</li>
-<li>如果要求 RSA 是安全的，<strong>p 与 q 必为足够大的素数</strong>;<ul>
+<li>如果要求 RSA 是安全的，<strong>p 与 q 必为足够大的素数</strong>;
+<ul>
 <li>使分析者没有办法在多项式时间内将 n 分解出来。</li>
 </ul>
 </li>
-<li><strong>模 n 的求幂运算</strong><ul>
+<li><strong>模 n 的求幂运算</strong>
+<ul>
 <li>著名的“平方-和-乘法”方法将计算 $x^c;mod;n$ 的模乘法的次数缩小到至多为 2l，l 是指数 c 二进制表示的位数。</li>
 </ul>
 </li>
 </ul>
+<h1>散列函数的特点和作用</h1>
+<h6 id="散列函数（Hash-Function）的目的">散列函数（Hash Function）的目的</h6>
+<ul>
+<li>将<strong>任意长的消息</strong>映射成一个<strong>固定长度的散列值</strong>（hash 值），也称<br>
+为<strong>消息摘要</strong>。消息摘要可以作为认证符，完成消息认证。</li>
+</ul>
+<h6 id="散列函数的健壮性">散列函数的健壮性</h6>
+<ul>
+<li>弱无碰撞特性<br>
+  散列函数 h 被称为是弱无碰撞的，是指在消息特定的明文空间 X 中，给定消息 x∈X，<strong>在计算上几乎找不到不同于 x 的 x’，x’∈X，使得 h(x)=h(x’)</strong>。</li>
+<li>强无碰撞特性<br>
+  散列函数 h 被称为是强无碰撞的，是指<strong>在计算上难以找到与 x 相异<br>
+的 x’，满足 h(x)=h(x’)</strong>，x’可以不属于 X。</li>
+<li>单向性<br>
+  散列函数 h 被称为单向的，是指<strong>通过 h 的逆函数 h-1 来求得散列值<br>
+h(x)的消息原文 x，在计算上不可行</strong>。</li>
+</ul>
+<h6 id="生日悖论对于散列函数的意义">生日悖论对于散列函数的意义</h6>
+<ul>
+<li>n 位长度的散列值，可能发生一次碰撞的测试次数不是 $2^n$ 次，而是大约 $2^{n/2}$次。</li>
+<li>一个 40 位的散列值将是不安全的，因为大约 100 万个随机散列值中将找到一个碰撞的概率为 50%，</li>
+<li><strong>消息摘要的长度不低于为 128 位</strong>。</li>
+</ul>
+<h1>EMI、EMC、防电磁泄漏主要方法</h1>
+<ul>
+<li>电磁干扰 EMI（Electro Magnetic Interference）是指一切与有用信号无关的、不希望有的或对电器及电子设备产生不良影响的<strong>电磁发射</strong>。</li>
+<li>防止 EMI 要从两个方面来考虑:
+<ul>
+<li><strong>减少</strong>电子设备的电磁发射；</li>
+<li><strong>提高</strong>电子设备的电磁兼容性 EMC。</li>
+</ul>
+</li>
+<li>电磁兼容性 EMC（Electro Magnetic Compatibility）:电子设备在自己正常工作时产生的电磁环境，与其它电子设备之间相互不影响的电磁特性。</li>
+</ul>
+<h6 id="TEMPEST-技术">TEMPEST 技术</h6>
+<ul>
+<li>瞬变电磁脉冲发射标准 Transient Electromagnetic PulseEmanation Standard</li>
+<li>计算机信息泄漏安全防护技术，是一项综合性的技术，包括泄露信息的分析、预测、接收、识别、复原、防护、测试、安全评估等项技术，涉及到多个学科领域。</li>
+</ul>
+<h6 id="红信号">红信号</h6>
+<ul>
+<li>通常我们把输入、输出的信息数据信号及它们的变换称为<strong>核心红信号</strong>。</li>
+<li>那些可以造成核心红信号泄密的控制信号称为<strong>关键红信号</strong>，红信号的传输通道或单元电路称为<strong>红区</strong>。</li>
+<li>所谓的“TEMPEST”要解决的问题就是防止红信号发生电磁信息泄漏。</li>
+</ul>
+<h6 id="防电磁信息泄漏">防电磁信息泄漏</h6>
+<p>主要包括三个层面：</p>
+<ul>
+<li><strong>抑制电磁发射</strong>，采取各种措施减小“红区”电路电磁发射；</li>
+<li><strong>屏蔽隔离</strong>，在其周围利用各种屏蔽材料使红信号电磁发射场衰减到足够小，使其不易被接收，甚至接收不到；</li>
+<li><strong>相关干扰</strong>，采取各种措施使相关电磁发射泄漏即使被接收到也无法识别。</li>
+</ul>
+<p><strong>屏蔽法（即空域法）</strong><br>
+  主要用来屏蔽辐射及干扰信号。<br>
+  采用<strong>各种屏蔽材料和结构，合理地将辐射电磁场与接收器隔<br>
+离开</strong>，使辐射电磁场在到达接收器时强度降低到最低限度。<br>
+  空域防护是对空间辐射电磁场控制的最有效和最基本的方法，机房屏蔽室就是这种方法的典型例子。</p>
+<p><strong>频域法</strong><br>
+  主要解决正常的电磁发射受干扰问题。不论是辐射电磁场，还是传导的干扰电压和电流都具有一定的频谱，即由一定的频率成分组成。<br>
+  通过频域控制的方法来抑制电磁干扰辐射的影响，即<strong>利用系统的频率特性将需要的频率成分(信号、电源的工作交流频率)加以接收，而将干扰的频率加以剔除</strong>。<br>
+  频域法就是利用要接收的信号与干扰所占有的频域不同，对频域进行控制。</p>
+<p><strong>时域法</strong><br>
+  用来回避干扰信号。<br>
+  当干扰非常强，不易受抑制、但又在一定时间内阵发存在时，<strong>通常采用时间回避方法，即信号的传输在时间上避开干扰</strong>。</p>
+<h1>容错与容灾的概念及主要技术方法</h1>
+<h6 id="容错">容错</h6>
+<p>保证系统可靠性的三条途径：</p>
+<ul>
+<li><strong>避错</strong>是完善设计和制造，试图构造一个不会发生故障的系统，比较理想化。</li>
+<li><strong>纠错</strong>做为避错的补充。一旦出现故障，可以通过检测、排除等方法来消除故障，再进行系统的恢复。</li>
+<li><strong>容错</strong>是第三条途径。其基本思想是即使出现了错误，系统也可以执行一组规定的程序。</li>
+</ul>
+<h6 id="容错系统">容错系统</h6>
+<ol>
+<li><strong>高可用度系统</strong>：可用度用系统在某时刻可以运行的概率衡量。高可用度系统面向通用计算机系统，用于执行各种无法预测的用户程序，主要面向商业市场。</li>
+<li><strong>长寿命系统</strong>：长寿命系统在其生命期中不能进行人工维修，常用于航天系统。</li>
+<li><strong>延迟维修系统</strong>：延迟维修系统也是一种容灾系统，用于航天、航空等领域，要求满足在一定阶段内不进行维修仍可保持运行。</li>
+<li><strong>高性能系统</strong>：高性能系统对于故障（瞬间或永久）都非常敏感，因此应当具有瞬间故障的自动恢复能力，并且增加平均无故障时间。</li>
+<li><strong>关键任务系统</strong>：关键任务系统出错可能危及人的生命或造成重大经济损失，要求处理正确无误，而且恢复故障时间要最短。</li>
+</ol>
+<h6 id="常用的数据容错技术">常用的数据容错技术</h6>
+<ol>
+<li><strong>空闲设备</strong>：也称双件热备，就是备份两套相同的部件。当正常运行的部件出现故障时，原来空闲的一台立即替补。</li>
+<li><strong>镜像</strong>：镜像是把一份工作交给两个相同的部件同时执行，这样在一个部件出现故障时，另一个部件继续工作。</li>
+<li><strong>复现</strong>：复现也称延迟镜像，与镜像一样需要两个系统，但是它把一个系统称为原系统，另一个成为辅助系统。辅助系统从原系统中接收数据，与原系统中的数据相比，辅助系统接收数据存在着一定延迟。</li>
+<li><strong>负载均衡</strong>：负载均衡是指将一个任务分解成多个子任务，分配给不同的服务器执行，通过减少每个部件的工作量，增加系统的稳定性。</li>
+</ol>
+<h6 id="容灾">容灾</h6>
+<ul>
+<li>容灾的含义是对偶然事故的<strong>预防和恢复</strong>。</li>
+<li>解决方案有两类：
+<ul>
+<li>对<strong>服务</strong>的维护和恢复；</li>
+<li>保护或恢复丢失的、被破坏的或被删除的信息。</li>
+</ul>
+</li>
+<li><strong>灾难恢复策略</strong>
+<ol>
+<li>做最坏的打算</li>
+<li>充分利用现有资源</li>
+<li>既重视灾后恢复，也注意灾前措施</li>
+</ol>
+</li>
+<li><strong>数据和系统的备份和还原</strong>
+<ul>
+<li>是事故恢复能力的重要组成，</li>
+<li>数据备份越新、系统备份越完整的机构部门就越容易实现灾难恢复操作。</li>
+</ul>
 </li>
 </ul>
-<h1 id="散列函数的特点和作用"><a href="#散列函数的特点和作用" class="headerlink" title="散列函数的特点和作用"></a>散列函数的特点和作用</h1><h1 id="EMI、EMC、防电磁泄漏主要方法"><a href="#EMI、EMC、防电磁泄漏主要方法" class="headerlink" title="EMI、EMC、防电磁泄漏主要方法"></a>EMI、EMC、防电磁泄漏主要方法</h1><h1 id="容错与容灾的概念及主要技术方法"><a href="#容错与容灾的概念及主要技术方法" class="headerlink" title="容错与容灾的概念及主要技术方法"></a>容错与容灾的概念及主要技术方法</h1><h1 id="windows-的网络认证"><a href="#windows-的网络认证" class="headerlink" title="windows 的网络认证"></a>windows 的网络认证</h1><h1 id="利用公开密钥和对称密钥设计认证协议获得会话密钥"><a href="#利用公开密钥和对称密钥设计认证协议获得会话密钥" class="headerlink" title="利用公开密钥和对称密钥设计认证协议获得会话密钥"></a>利用公开密钥和对称密钥设计认证协议获得会话密钥</h1><h1 id="Kerberos-工作原理"><a href="#Kerberos-工作原理" class="headerlink" title="Kerberos 工作原理"></a>Kerberos 工作原理</h1><h1 id="PKI-的体系结构及工作原理"><a href="#PKI-的体系结构及工作原理" class="headerlink" title="PKI 的体系结构及工作原理"></a>PKI 的体系结构及工作原理</h1><h1 id="访问控制的概念"><a href="#访问控制的概念" class="headerlink" title="访问控制的概念"></a>访问控制的概念</h1><h1 id="DAC、MAC、RBAC-的工作原理及特点"><a href="#DAC、MAC、RBAC-的工作原理及特点" class="headerlink" title="DAC、MAC、RBAC 的工作原理及特点"></a>DAC、MAC、RBAC 的工作原理及特点</h1><h1 id="Windows-安全体系结构、活动目录与组策略"><a href="#Windows-安全体系结构、活动目录与组策略" class="headerlink" title="Windows 安全体系结构、活动目录与组策略"></a>Windows 安全体系结构、活动目录与组策略</h1><h1 id="传统病毒、蠕虫、木马的结构原理"><a href="#传统病毒、蠕虫、木马的结构原理" class="headerlink" title="传统病毒、蠕虫、木马的结构原理"></a>传统病毒、蠕虫、木马的结构原理</h1><h1 id="拒绝服务攻击、缓冲区溢出、举例"><a href="#拒绝服务攻击、缓冲区溢出、举例" class="headerlink" title="拒绝服务攻击、缓冲区溢出、举例"></a>拒绝服务攻击、缓冲区溢出、举例</h1><h1 id="防火墙主要技术概述"><a href="#防火墙主要技术概述" class="headerlink" title="防火墙主要技术概述"></a>防火墙主要技术概述</h1><h1 id="Netfilter／iptables-的工作原理"><a href="#Netfilter／iptables-的工作原理" class="headerlink" title="Netfilter／iptables 的工作原理"></a>Netfilter／iptables 的工作原理</h1><h1 id="基于网络和基于主机的入侵检测系统的优缺点"><a href="#基于网络和基于主机的入侵检测系统的优缺点" class="headerlink" title="基于网络和基于主机的入侵检测系统的优缺点"></a>基于网络和基于主机的入侵检测系统的优缺点</h1><h1 id="snorts-的工作原理"><a href="#snorts-的工作原理" class="headerlink" title="snorts 的工作原理"></a>snorts 的工作原理</h1><h1 id="IPSEC-协议的体系结构"><a href="#IPSEC-协议的体系结构" class="headerlink" title="IPSEC 协议的体系结构"></a>IPSEC 协议的体系结构</h1><h1 id="传输方式和隧道方式的区别"><a href="#传输方式和隧道方式的区别" class="headerlink" title="传输方式和隧道方式的区别"></a>传输方式和隧道方式的区别</h1><h1 id="SSL-握手协议"><a href="#SSL-握手协议" class="headerlink" title="SSL 握手协议"></a>SSL 握手协议</h1><h1 id="双签名技术原理"><a href="#双签名技术原理" class="headerlink" title="双签名技术原理"></a>双签名技术原理</h1><h1 id="DRM-结构原理"><a href="#DRM-结构原理" class="headerlink" title="DRM 结构原理"></a>DRM 结构原理</h1><h1 id="数字水印的工作原理"><a href="#数字水印的工作原理" class="headerlink" title="数字水印的工作原理"></a>数字水印的工作原理</h1><h1 id="cc-与-bs7799-的区别"><a href="#cc-与-bs7799-的区别" class="headerlink" title="cc 与 bs7799 的区别"></a>cc 与 bs7799 的区别</h1><h1 id="风险评估的主要方法"><a href="#风险评估的主要方法" class="headerlink" title="风险评估的主要方法"></a>风险评估的主要方法</h1><h1 id="网络安全法（非教材）"><a href="#网络安全法（非教材）" class="headerlink" title="网络安全法（非教材）"></a>网络安全法（非教材）</h1><h1 id="等级保护-2-0（非教材）"><a href="#等级保护-2-0（非教材）" class="headerlink" title="等级保护 2.0（非教材）"></a>等级保护 2.0（非教材）</h1><h1 id="工程伦理道德"><a href="#工程伦理道德" class="headerlink" title="工程伦理道德"></a>工程伦理道德</h1>
+<h1>windows 的网络认证</h1>
+<h1>利用公开密钥和对称密钥设计认证协议获得会话密钥</h1>
+<h6 id="基于对称密码体制下的认证">基于对称密码体制下的认证</h6>
+<ol>
+<li>示证方和验证方共享密钥，通过共享密钥来维系彼此的信任关系，实际上<strong>认证就是建立某种信任关系的过程</strong>。</li>
+<li>在只有少量用户的封闭式网络系统中，各用户之间的双人共享密钥的数量有限，可以<strong>采用挑战-应答方式来实现认证</strong>；</li>
+<li>对于规模较大的网络系统，一般采用<strong>密钥服务器</strong>的方式来实现认证，即<strong>依靠可信的第三方完成认证</strong>。</li>
+</ol>
+<h6 id="基于公开密钥的认证协议">基于公开密钥的认证协议</h6>
+<p>基于公开密钥体制下的认证协议通常有两种认证方式：</p>
+<ol>
+<li>实体 A 需要认证实体 B，A 发送一个明文挑战消息（也称挑战因子，通常是随机数）给 B，B 接收到挑战后，<strong>用自己的私钥对挑战明文消息加密，称为签名</strong>；B 将签名信息发送给 A，<strong>A 使用 B 的公钥来解密签名消息，称为验证签名</strong>，以此来确定 B 是否具有合法身份。</li>
+<li>实体 A 将<strong>挑战因子</strong>用<strong>实体 B 的公钥加密</strong>后发送给 B，B 收到后，用自己的<strong>私钥解密还原出挑战因子</strong>，并将<strong>挑战因子明文发还给 A</strong>，A 可以根据<strong>挑战因子内容的真伪</strong>来核实 B 的身份。</li>
+</ol>
+<h1>Kerberos 工作原理</h1>
+<p>设计目标</p>
+<ul>
+<li>通过使用<strong>对称密钥系统</strong>为客户机/服务器应用程序提供强大的第三方认证服务。</li>
+</ul>
+<p>前提条件</p>
+<ul>
+<li>每个用户或应用服务器与 Kerberos 分享一个对称密钥。</li>
+</ul>
+<p>结构&amp;机制</p>
+<ul>
+<li>认证服务器 AS（Authentication Server）和票据授予服务器 TGS（Ticket Granting Server）。</li>
+<li>票据 Ticket 是客户端用于证明自己身份。
+<ul>
+<li>AS 负责签发访问 TGS 服务器的票据，TGS 负责签发访问其它应用服务器的票据。</li>
+</ul>
+</li>
+<li>允许一个用户通过交换加密消息在整个网络上与另一个用户或应用服务器互相证明身份，Kerberos 给通讯双方提供对称密钥。</li>
+</ul>
+<h6 id="KerBeros-协议">KerBeros 协议</h6>
+<p>第一阶段身份验证服务交换</p>
+<ul>
+<li>C → AS：$ID_C || ID_{tgs} || TS_1$</li>
+<li>AS → C：$E_{KC}[K_{c,tgs}||ID_{tgs}||TS_2||Lifetime_2||Ticket_{tgs}]$</li>
+<li>$Ticket_{tgs} = E_{Ktgs}[K_{c,tgs}||ID_C||AD_C||ID_{tgs}||TS_2||Lifetime_2]$</li>
+</ul>
+<p>第二阶段票据授予服务交换</p>
+<ul>
+<li>C → TGS： $ID_V||Ticket_{tgs}||Authenticator_c$</li>
+<li>TGS → C： $E_{K_{c,tgs}}[K_{c,v} ||ID_V||TS_4||Ticket_v]$</li>
+<li>$Authenticator_c = E_{K_{c,tgs}}[ID_C||AD_C||TS_3]$</li>
+<li>$Ticket_v= E_{KV}[K_{c,v}||ID_C||AD_C||ID_V||TS_4||Lifetime_4]$</li>
+</ul>
+<p>第三阶段客户与服务器身份验证交换</p>
+<ul>
+<li>C → V：$Ticket_v||Authenticator_c$</li>
+<li>V → C：$E_{K_{c,v}}[TS_5+1]$ (for mutualauthentication)</li>
+<li>$Authenticator_c = E_{K_{c,v}}[ID_C||AD_C||TS_5]$</li>
+</ul>
+<h1>PKI 的体系结构及工作原理</h1>
+<h6 id="公钥基础设施-PKI">公钥基础设施 PKI</h6>
+<p>  PKI 是一种<strong>遵循一定标准的密钥管理基础平台</strong>，为所有网络应用<strong>提供</strong>加密和数字签名等密码服务所必需的密<strong>钥和证书</strong>管理。</p>
+<ul>
+<li>PKI 就是利用公钥理论和技术建立的提供安全服务的基础设施。</li>
+<li>用户可利用 PKI 平台提供的服务进行安全的电子交易、通信和互联网上的各种活动。</li>
+</ul>
+<h6 id="基于-X-509-的-PKI-系统">基于 X.509 的 PKI 系统</h6>
+<p>  X.509 是国际电信联盟-电信（ITU-T）部分标准和国际标准化组织（ISO）的证书格式标准。<br>
+  X.509 的主要作用</p>
+<ul>
+<li><strong>确定了公钥证书结构的基准</strong></li>
+<li>X.509 V3 证书包括一组按预定义顺序排列的强制字段，还有可选扩展字段，即使在强制字段中，X.509 证书也具有很大的灵活性，因为它为大多数字段提供了多种编码方案。</li>
+</ul>
+<h6 id="PKI-体系结构">PKI 体系结构</h6>
+<p><img src="https://transient91.github.io/images/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/PKI%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png" alt="PKI体系结构.png"></p>
+<h6 id="X-509-的-CA-目录的层次结构：">X.509 的 CA 目录的层次结构：</h6>
+<p>用户 a 的证书链可以使用下面的形式表达：<br>
+$KR_A$《$CA_B$》$KR_B$《$CA_C$》$KR_C$《$CA_D$》$KR_D$《$CA_a$》<br>
+<img src="https://transient91.github.io/images/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/X.509%E7%9A%84CA%E7%9B%AE%E5%BD%95%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84.png" alt="X.509的CA目录的层次结构.png"></p>
+<h6 id="一个典型的-PKI-模型">一个典型的 PKI 模型</h6>
+<p><img src="https://transient91.github.io/images/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/%E4%B8%80%E4%B8%AA%E5%85%B8%E5%9E%8B%E7%9A%84PKI%E6%A8%A1%E5%9E%8B.png" alt="一个典型的PKI模型.png"></p>
+<h6 id="PKI-系统功能">PKI 系统功能</h6>
+<ul>
+<li>接收验证用户数字证书的申请；</li>
+<li>确定是否接受用户数字证书的申请；</li>
+<li>向申请者颁发（或拒绝颁发）数字证书；</li>
+<li>接收、处理用户的数字证书更新请求；</li>
+<li>接收用户数字证书的查询、撤销；</li>
+<li>产生和发布证书的有效期；</li>
+<li>数字证书的归档；</li>
+<li>密钥归档；</li>
+<li>历史数据归档。</li>
+</ul>
+<h1>访问控制的概念</h1>
+<h6 id="概述">概述</h6>
+<ul>
+<li>身份认证：识别“<strong>用户是谁</strong>”的问题</li>
+<li>访问控制：管理用户<strong>对资源的访问</strong></li>
+</ul>
+<h6 id="访问控制的基本组成元素">访问控制的基本组成元素</h6>
+<ul>
+<li>主体(Subject)：是指提出访问请求的实体，是动作的发起者，但不一定是动作的执行者。<strong>主体</strong>可以是<strong>用户</strong>或<strong>其它代理用户行为的实体</strong>（如进程、作业和程序等）。</li>
+<li>客体(Object)：是指可以接<strong>受主体访问的被动实体</strong>。客体的内涵很广泛，凡是可以被操作的信息、资源、对象都可以认为是客体。</li>
+<li>访问控制策略（Access Control Policy）：是指主体对客体的操作行为和约束条件的关联集合。简单地讲，访问控制策略是<strong>主体对客体的访问规则集合</strong>，这个规则集合可以直接决定主体是否可以对客体实施的特定的操作。</li>
+</ul>
+<h1>DAC、MAC、RBAC 的工作原理及特点</h1>
+<h6 id="自主访问控制-DAC-Discretionary-Access-Control">自主访问控制 DAC(Discretionary Access Control)</h6>
+<ul>
+<li>根据<strong>自主访问</strong>控制策略建立的一种模型，</li>
+<li>允许合法用户以用户或用户组的身份来访问系统控制策略许可的客体，同时阻止非授权用户访问客体。</li>
+<li>某些用户还可以自主地把自己所拥有的客体的访问权限授予其它用户。</li>
+<li>UNIX、LINUX 以及 Windows NT 等操作系统都提供自主访问控制的功能。</li>
+<li>特权用户为普通用户分配的访问权限信息的形式
+<ul>
+<li>访问控制表 ACL（Access Control Lists）</li>
+<li>访问控制能力表 ACCL（Access Control Capability Lists）</li>
+<li>访问控制矩阵 ACM（Access Control Matrix）</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://transient91.github.io/images/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/DAC.png" alt="DAC.png"></p>
+<h6 id="强制访问控制-MAC-Mandatory-Access-Control">强制访问控制 MAC(Mandatory Access Control)</h6>
+<p>强制访问控制 MAC 是一种多级访问控制策略</p>
+<ul>
+<li>系统事先给访问<strong>主体</strong>和受控<strong>客体</strong>分配<strong>不同的安全级别属性</strong>。</li>
+<li>在实施访问控制时，系统先对访问<strong>主体</strong>和受控<strong>客体</strong>的<strong>安全级别</strong>属性进行<strong>比较</strong>，再决定访问主体能否访问该受控客体。</li>
+</ul>
+<p>MAC 模型形式化描述</p>
+<ul>
+<li>主体集 S 和客体集 O</li>
+<li>安全类 SC(x) = &lt; L ，C &gt;
+<ul>
+<li>L 为有层次的<strong>安全级别</strong> Level</li>
+<li>C 为无层次的<strong>安全范畴</strong> Category</li>
+</ul>
+</li>
+</ul>
+<p>访问的四种形式</p>
+<ul>
+<li>向下读（RD，Read Down）：
+<ul>
+<li>主体安全级别高于客体信息资源的安全级别时，即 SC(s)≥SC(o)，允许读操作； Bell-LaPadula</li>
+</ul>
+</li>
+<li>向上读（RU，Read Up）：
+<ul>
+<li>主体安全级别低于客体信息资源的安全级别时，即 SC(s)≤SC(o)，允许读操作； Biba</li>
+</ul>
+</li>
+<li>向下写（WD，Write Down）：
+<ul>
+<li>SC(s)≥SC(o)时，允许写操作； Biba</li>
+</ul>
+</li>
+<li>向上写（WU，Write Up）：
+<ul>
+<li>SC(s)≤SC(o)时，允许写操作。Bell-LaPadula</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://transient91.github.io/images/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/MAC.png" alt="MAC.png"></p>
+<h6 id="基于角色的访问控制-RBAC（Role-Based-Access-Control）">基于角色的访问控制 RBAC（Role Based Access Control）</h6>
+<p>Group 的概念</p>
+<ul>
+<li>一般认为 Group 是具有某些相同特质的用户集合</li>
+</ul>
+<p>在 UNIX 操作系统中 Group 可以被看成是拥有相同访问权限的用户集合</p>
+<ul>
+<li>定义用户组时会为该组赋予相应的访问权限。</li>
+<li>如果一个用户加入了该组，则该用户即具有了该用户组的访问权限</li>
+<li>角色 Role 的概念，可以这样理解一个角色是一个与特定工作活动相关联的<strong>行为与责任</strong>的集合</li>
+</ul>
+<p>角色 Role 的理解<br>
+一个角色是一个与特定工作活动相关联的行为与责任的集合。</p>
+<ul>
+<li>Role 不是用户的集合，也就与组 Group 不同。</li>
+<li>当将<strong>一个角色与一个组绑定</strong>，则这个组就拥有了该角色拥有的特定工作的行为能力和责任。</li>
+<li><strong>组</strong> Group 和<strong>用户</strong> User 都可以看成是<strong>角色分配的单位和载体</strong>。</li>
+<li>而一个角色 Role 可以看成具有某种能力或某些属性的主体的一个抽象。</li>
+</ul>
+<p>引入角色 Role 的目的</p>
+<ul>
+<li>为了隔离 User 与 Privilege。</li>
+<li>Role 作为一个<strong>用户与权限的代理层</strong>，所有的授权应该给予 Role 而不是直接给 User 或 Group。</li>
+<li>RBAC 模型的<strong>基本思想是将访问权限分配给一定的角色，用户通过饰演不同的角色获得角色所拥有的访问许可权</strong>。</li>
+</ul>
+<p><img src="https://transient91.github.io/images/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/RBAC.png" alt="RBAC.png"></p>
+<h1>Windows 安全体系结构、活动目录与组策略</h1>
+<h1>传统病毒、蠕虫、木马的结构原理</h1>
+<h6 id="传统病毒">传统病毒</h6>
+<p>传统病毒的代表</p>
+<ul>
+<li>巴基斯坦智囊（Brain）、大麻、磁盘杀手（DISKKILLER）、CIH 等。</li>
+</ul>
+<p>传统病毒一般有三个主要模块组成，包括<strong>启动模块、传染模块和破坏模块</strong>。</p>
+<p>CIH</p>
+<ul>
+<li>感染 Windows95/98 环境下 PE 格式的 EXE 文件（第一例）</li>
+<li>病毒发作时直接攻击和破坏计算机硬件系统。</li>
+<li>该病毒通过文件复制进行传播。</li>
+<li>计算机开机后，运行了带病毒的文件，其病毒就驻留在 Wnidows 核心内存里，</li>
+<li>组成：初始化驻留模块、传染模块和破坏模块。</li>
+</ul>
+<h6 id="蠕虫病毒">蠕虫病毒</h6>
+<p>蠕虫与传统病毒的区别：</p>
+<ul>
+<li>传统病毒是需要的寄生的，通过感染其它文件进行传播。</li>
+<li>蠕虫病毒一般<strong>不需要寄生</strong>在宿主文件中，<strong>传播途径</strong>主要包括局域网内的共享文件夹、电子邮件、网络中的恶意网页和大量存在着漏洞的服务器等。</li>
+<li>可以说蠕虫病毒是<strong>以计算机为载体，以网络为攻击对象</strong>。</li>
+</ul>
+<p>蠕虫病毒能够利用漏洞，分为软件漏洞和人为缺陷</p>
+<ul>
+<li>软件漏洞主要指程序员由于习惯不规范、错误理解或想当然，在<strong>软件中留下存在安全隐患的代码</strong></li>
+<li>人为缺陷主要指的是计算机用户的疏忽，这就是所谓的<strong>社会工程学</strong>（Social Engineering）问题。</li>
+</ul>
+<h6 id="木马病毒">木马病毒</h6>
+<p>木马病毒，“木马计”，伪装潜伏的网络病毒。</p>
+<ul>
+<li>1986 年的 PC-Write 木马是世界上第一个计算机木马</li>
+<li>木马是有<strong>隐藏性的、传播性的</strong>可被用来进行恶意行为的程序，因此，也被看作是一种计算机病毒。</li>
+<li>木马一般不会直接对电脑产生危害，以控制电脑为目的，当然电脑一旦被木马所控制，后果不堪设想。</li>
+</ul>
+<p>木马的传播（种木马或植入木马）方式</p>
+<ul>
+<li>主要通过电子邮件附件、被挂载木马的网页以及捆绑了木马程序的应用软件。</li>
+<li>木马被下载安装后完成修改注册表、驻留内存、安装后门程序、设置开机加载等，甚至能够使杀毒程序、个人防火墙等防范软件失效。</li>
+</ul>
+<p>木马病毒程序组成</p>
+<ul>
+<li>控制端程序(<strong>客户端</strong>)
+<ul>
+<li>是黑客用来控制远程计算机中的木马的程序；</li>
+</ul>
+</li>
+<li>木马程序（<strong>服务器端</strong>）
+<ul>
+<li>是木马病毒的核心，是潜入被感染的计算机内部、获取其操作权限的程序；</li>
+</ul>
+</li>
+<li>木马<em>配置程序</em>
+<ul>
+<li>通过修改木马名称、图标等来伪装隐藏木马程序，并配置端口号、回送地址等信息确定反馈信息的传输路径。</li>
+</ul>
+</li>
+</ul>
+<h1>拒绝服务攻击、缓冲区溢出、举例</h1>
+<h1>防火墙主要技术概述</h1>
+<h1>Netfilter／iptables 的工作原理</h1>
+<h1>基于网络和基于主机的入侵检测系统的优缺点</h1>
+<h1>snorts 的工作原理</h1>
+<h1>IPSEC 协议的体系结构</h1>
+<h1>传输方式和隧道方式的区别</h1>
+<h1>SSL 握手协议</h1>
+<h1>双签名技术原理</h1>
+<h1>DRM 结构原理</h1>
+<h1>数字水印的工作原理</h1>
+<h1>cc 与 bs7799 的区别</h1>
+<h1>风险评估的主要方法</h1>
+<h1>网络安全法（非教材）</h1>
+<h1>等级保护 2.0（非教材）</h1>
+<h1>工程伦理道德</h1>
+
       
 
       
@@ -320,6 +682,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">信息安全</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -526,6 +899,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">heox</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">软件构造</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">信息安全</a>
               </li>
             
             <div class="clearfix"></div>
